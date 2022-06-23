@@ -1,0 +1,91 @@
+/* reset css */
+* {margin: 0; padding: 0; box-sizing: border-box;}
+a {color: inherit; text-decoration: none;}
+input {outline: none;}
+button {border: none; background: none;}
+
+
+body {
+  font-family: 'MaruBuri';
+}
+
+/* desktop */
+
+/* input-form */
+#input-form {
+  margin-bottom: 20px;
+}
+
+#input-form button {
+  background-color: #e2e2e2;
+  padding: 3px 7px;
+  border-radius: 3px;
+  transition: background-color 200ms ease-in;
+}
+
+#input-form button:hover{
+  background-color: rgb(123, 163, 191);;
+}
+
+/* header */
+header {
+  padding: 20px 0;
+}
+
+.title {
+  font-size: 40px;
+  text-align: center;
+  margin-bottom: 20px;
+}
+
+.menubar {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-top: 2px solid rgb(175, 175, 175);
+  border-bottom: 2px solid rgb(175, 175, 175);
+  padding: 8px 10px;
+  margin-bottom: 20px;
+}
+
+.menubar a {
+  display: block;
+  padding: 5px 10px;
+  font-size: 18px;
+  transition: all 300ms ease-in-out;
+}
+
+.menubar a:hover{
+  background-color: rgb(123, 163, 191);
+  border-radius: 5px;
+  color: #fff;
+}
+
+/* news */
+.news-content {
+  box-shadow: 3px 3px 10px rgb(158, 158, 158);
+  padding: 20px;
+  margin-bottom: 30px;
+  border-radius: 7px;
+}
+
+.news-content img {
+  width: 100%;
+  height: 230px;
+  object-fit: cover;
+  margin-bottom: 20px;
+}
+
+.news-title {
+  font-family: 'MaruBuriSemiBold';
+  font-size: 20px;
+  line-height: 1.5;
+  text-align: center;
+}
+
+/* nav */
+nav {
+  display: flex;
+  justify-content: center;
+  padding: 20px;
+}
