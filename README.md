@@ -22,10 +22,12 @@ netlify를 이용하여 배포하였습니다.
 
 ## plan
 
--   pagination 구현하기
+-   pagination 구현하기(완료)
 -   모바일 버전의 메뉴 구현하기
--   코드 리팩토링
+-   code refactoring(완료)
 
 ## History
 
 -   2022/06/23 : deploy 완료. readme 생성.
+-   2022/06/26 : code refactoring 완료.
+-   2022/06/27 : pagination 구현.

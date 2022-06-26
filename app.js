@@ -1,5 +1,7 @@
 let news = [];
 let url = null;
+let totalPages = null;
+let page = 1;
 const menuTopic = document.querySelectorAll(".menubar a");
 const inputArea = document.querySelector("#input-form input");
 const inputBtn = document.querySelector("#input-form button");
@@ -13,12 +15,17 @@ inputBtn.addEventListener("click", (event)=>{searchByUserInput(event)});
 
 //request news data
 async function requestNewsData() {
-  let header = new Headers({'x-api-key' : 'Cjzdcrz9zloEr6VYyhq7JYFd0eBePABU2irDG-3MN0g'});
+  let header = new Headers({'x-api-key' : 'JRooEsxKAGjRMOqYE3x9GWgV8WCzSB6AGQ2uODlNlgE'});
+  url.searchParams.set("page", page);
+  console.log(url);
   let requestNews = await fetch(url, {headers : header});
   let receiveNews = await requestNews.json();
   console.log(receiveNews);
   news = receiveNews.articles;
+  totalPages = receiveNews.total_pages;
+  page = receiveNews.page
   renderNews();
+  paginationMaker();
 }
 // receive news
 const latestHeadLineNews = () => {
@@ -71,6 +78,61 @@ const renderNews = () => {
 
   document.querySelector(".news .row").innerHTML = renderNewsHTML;
 };
+
+// make pagination
+const paginationMaker = () => {
+  let pageGroup = Math.ceil(page / 5);
+  let lastPageInGroup = (pageGroup * 5);
+  let firstPageInGroup = lastPageInGroup - 4 <= 0 ? firstPageInGroup = 1 : lastPageInGroup - 4;
+
+  if(lastPageInGroup > totalPages){
+    lastPageInGroup = totalPages
+  };
+
+  // render pagination
+  let paginationRenderHtml = "";
+
+  if(firstPageInGroup >= 6){
+    paginationRenderHtml = `
+    <li class="page-item">
+      <a class="page-link" href="#" onclick="movePage(${1})" aria-label="Previous">
+        <span aria-hidden="true">&laquo;</span>
+      </a>
+    </li>
+    <li class="page-item">
+    <a class="page-link" href="#" onclick="movePage(${page - 1})" aria-label="Previous">
+      <span aria-hidden="true">&lt;</span>
+    </a>
+  </li>`;
+  }
+
+  for(let i = firstPageInGroup; i <= lastPageInGroup; i++){
+    paginationRenderHtml += `<li class="page-item ${page == i ? "active" : ""}"><a class="page-link" href="#" onclick="movePage(${i})">${i}</a></li>`;
+  };
+
+  if (lastPageInGroup < totalPages){
+    paginationRenderHtml += ` 
+  <li class="page-item">
+    <a class="page-link" href="#" onclick="movePage(${page + 1})" aria-label="Previous">
+      <span aria-hidden="true">&gt;</span>
+    </a>
+  </li>
+  <li class="page-item">
+  <a class="page-link" href="#" onclick="movePage(${totalPages})" aria-label="Previous">
+    <span aria-hidden="true">&raquo;</span>
+  </a>
+</li>`;
+  }
+
+  document.querySelector(".pagination").innerHTML = paginationRenderHtml;
+};
+
+const movePage = (NowPageNum) => {
+  page = NowPageNum;
+  console.log(page);
+  requestNewsData();
+};
+
 
 // function call
 latestHeadLineNews();
