@@ -1,18 +1,20 @@
 /* reset css */
 * {margin: 0; padding: 0; box-sizing: border-box;}
 a {color: inherit; text-decoration: none;}
-input {outline: none;}
-button {border: none; background: none;}
-
+input {outline: none; border: none}
+button {border: none; background: none; cursor: pointer;}
 
 body {
   font-family: 'MaruBuri';
 }
 
-/* desktop */
+/* mobile */
 
-/* input-form */
-#input-form {
+/* form */
+.tool-box {
+  display: flex;
+  justify-content:space-between;
+  align-items: center;
   margin-bottom: 20px;
 }
 
@@ -24,7 +26,16 @@ body {
 }
 
 #input-form button:hover{
-  background-color: rgb(123, 163, 191);;
+  background-color: rgb(123, 163, 191);
+  color: #FFF;
+}
+
+input[type=text] {
+  padding: 0 5px;
+  width: 150px;
+  height: 30px;
+  border: 1px solid #6e6e6e;
+  border-radius: 3px;
 }
 
 /* header */
@@ -38,19 +49,31 @@ header {
   margin-bottom: 20px;
 }
 
+.menu-box {
+  display: none;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  width: 40%;
+  height: 100vh;
+  background-color: #e2e2e2;
+  box-shadow: 3px 3px 15px rgb(126, 126, 126);
+}
+
+.menu-box.active{
+  display: block;
+}
+
 .menubar {
-  display: flex;
-  flex-wrap: wrap;
-  justify-content: center;
-  border-top: 2px solid rgb(175, 175, 175);
-  border-bottom: 2px solid rgb(175, 175, 175);
-  padding: 8px 10px;
-  margin-bottom: 20px;
+  position: fixed;
+  top: 0; 
+  left: 0;
+  padding: 20px;
 }
 
 .menubar a {
   display: block;
-  padding: 5px 10px;
+  padding: 7px 10px;
   font-size: 18px;
   transition: all 300ms ease-in-out;
 }
@@ -59,6 +82,27 @@ header {
   background-color: rgb(123, 163, 191);
   border-radius: 5px;
   color: #fff;
+}
+
+/* menu on/off */
+.menuOn {
+  font-size: 25px;
+  display: inline-block;
+  color: #393939;
+}
+
+.menuOff {
+  position: absolute;
+  top: 15px;
+  right: 15px;
+  font-size: 22px;
+  z-index: 999;
+  color: #6e6e6e;
+}
+
+.menuOn:hover,
+.menuOff:hover {
+  color: #040404;
 }
 
 /* news */
@@ -88,4 +132,46 @@ nav {
   display: flex;
   justify-content: center;
   padding: 20px;
+}
+
+/* desktop */
+@media (min-width:768px) {
+  .tool-box {
+    justify-content:flex-end;
+  }
+
+  input[type=text] {
+    width: 180px;
+  }
+
+.menu-box {
+  display: block;
+  position: static;
+  width: auto;
+  height: auto;
+  background-color: transparent;
+  box-shadow: none;
+}
+
+.menubar {
+  position: static;
+  display: flex;
+  flex-direction: row;
+  flex-wrap: wrap;
+  justify-content: center;
+  border-top: 2px solid rgb(175, 175, 175);
+  border-bottom: 2px solid rgb(175, 175, 175);
+  padding: 8px 10px;
+  margin-bottom: 20px;
+}
+
+.menubar a {
+  padding: 5px 10px;
+}
+
+.menuOn,
+.menuOff {
+  display: none;
+}
+
 }

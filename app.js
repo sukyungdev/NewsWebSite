@@ -2,6 +2,7 @@ let news = [];
 let url = null;
 let totalPages = null;
 let page = 1;
+
 const menuTopic = document.querySelectorAll(".menubar a");
 const inputArea = document.querySelector("#input-form input");
 const inputBtn = document.querySelector("#input-form button");
@@ -10,6 +11,17 @@ menuTopic.forEach((item) => {
   item.addEventListener("click", (event)=>{findNewsByMenuTopic(event)});
 });
 inputBtn.addEventListener("click", (event)=>{searchByUserInput(event)});
+
+
+// menu toggle
+const inputForm = document.querySelector("#input-form");
+const menuOnBtn = document.querySelector(".menuOn");
+const menuOffBtn = document.querySelector(".menuOff");
+const menu = document.querySelector(".menu-box");
+
+menuOnBtn.addEventListener("click", () => { menu.classList.add("active");});
+menuOffBtn.addEventListener("click", () => { menu.classList.remove("active");});
+
 
 // function creation
 
@@ -26,10 +38,11 @@ async function requestNewsData() {
   page = receiveNews.page
   renderNews();
   paginationMaker();
-}
+};
+
 // receive news
 const latestHeadLineNews = () => {
-  url = new URL('https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&page_size=12');
+  url = new URL('https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&page_size=6');
   requestNewsData();
 };
 
@@ -37,14 +50,14 @@ const latestHeadLineNews = () => {
 // search by menu topic
 const findNewsByMenuTopic = async(event) => {
   let topic = event.target.textContent;
-  url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=${topic}&page_size=12`);
+  url = new URL(`https://api.newscatcherapi.com/v2/latest_headlines?countries=KR&topic=${topic}&page_size=6`);
   requestNewsData();
 };
 
 // search by user input
 const searchByUserInput = async() => {
   let userInput = inputArea.value.toLowerCase();
-  url = new URL(`https://api.newscatcherapi.com/v2/search?q=${userInput}&countries=KR&page_size=12`);
+  url = new URL(`https://api.newscatcherapi.com/v2/search?q=${userInput}&countries=KR&page_size=6`);
   requestNewsData();
 };
 
@@ -136,3 +149,4 @@ const movePage = (NowPageNum) => {
 
 // function call
 latestHeadLineNews();
+
