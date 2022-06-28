@@ -24,11 +24,12 @@ netlify를 이용하여 배포하였습니다.
 
 -   pagination (완료)
 -   mobile version menu (완료)
--   code refactoring(완료)
--   errors try catch throw
+-   code refactoring (완료)
+-   errors try catch throw (완료)
 
 ## History
 
 -   2022/06/23 : deploy 완료. readme 생성.
 -   2022/06/26 : code refactoring 완료.
 -   2022/06/27 : pagination, mobile version menu 완료.
+-   2022/06/28 : try catch throw 완료.

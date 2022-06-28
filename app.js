@@ -27,17 +27,37 @@ menuOffBtn.addEventListener("click", () => { menu.classList.remove("active");});
 
 //request news data
 async function requestNewsData() {
-  let header = new Headers({'x-api-key' : 'JRooEsxKAGjRMOqYE3x9GWgV8WCzSB6AGQ2uODlNlgE'});
-  url.searchParams.set("page", page);
-  console.log(url);
-  let requestNews = await fetch(url, {headers : header});
-  let receiveNews = await requestNews.json();
-  console.log(receiveNews);
-  news = receiveNews.articles;
-  totalPages = receiveNews.total_pages;
-  page = receiveNews.page
-  renderNews();
-  paginationMaker();
+  try {
+    // setting header url
+    let header = new Headers({'x-api-key' : 'JRooEsxKAGjRMOqYE3x9GWgV8WCzSB6AGQ2uODlNlgE'});
+    url.searchParams.set("page", page);
+    console.log(url);
+    // request data
+    let requestNews = await fetch(url, {headers : header});
+    let receiveNews = await requestNews.json();
+    console.log(requestNews);
+    // state ok
+    if(requestNews.status == 200) {
+      if(receiveNews.total_hits == 0){
+        throw new Error("No matches for your search.")
+      }
+      console.log("받은 데이터는", receiveNews);
+      news = receiveNews.articles;
+      
+      totalPages = receiveNews.total_pages;
+      page = receiveNews.page
+      renderNews();
+      paginationMaker();
+    } else {
+      throw new Error(receiveNews.message);
+    }
+
+  }catch(error){
+    console.log("에러는", error.message);
+    errorRender(error.message);
+  }
+
+  
 };
 
 // receive news
@@ -55,7 +75,8 @@ const findNewsByMenuTopic = async(event) => {
 };
 
 // search by user input
-const searchByUserInput = async() => {
+const searchByUserInput = async(event) => {
+  event.preventDefault();
   let userInput = inputArea.value.toLowerCase();
   url = new URL(`https://api.newscatcherapi.com/v2/search?q=${userInput}&countries=KR&page_size=6`);
   requestNewsData();
@@ -71,25 +92,35 @@ const renderNews = () => {
     } else {
       renderNewsHTML += 
       `<div class="col-12 col-md-6 col-lg-4">
-        <div class="news-content">
-            <img
-                src="${news[i].media}"
-                alt="news-img"
-            />
-            <h2 class="news-title"><a href="${news[i].link}" target="_blank">${news[i].title}</a></h2>
-            <p>
-            ${news[i].summary == null || news[i].summary == "" ? "내용없음" 
-            : news[i].summary.length > 150 ? news[i].summary.substring(0, 150) + "..." 
-            : news[i].summary}
-            </p>
-            <span>${news[i].published_date} - ${news[i].rights}</span>
-        </div>
+      <a href="${news[i].link}" target="_blank">
+          <div class="news-content">
+              <img
+                  src="${news[i].media || 'https://media.istockphoto.com/vectors/no-image-vector-symbol-missing-available-icon-no-gallery-for-this-vector-id1128826884?b=1&k=20&m=1128826884&s=170667a&w=0&h=7tmZDF3-85_rT_7luTYWkXydcRF4ZQ0UWIbW4IwX32E='}"
+                  alt="news-img"
+              />
+              <h2 class="news-title">${news[i].title}</h2>
+              <p>
+              ${news[i].summary == null || news[i].summary == "" ? "내용없음" 
+              : news[i].summary.length > 150 ? news[i].summary.substring(0, 150) + "..." 
+              : news[i].summary}
+              </p>
+              <span>${moment(news[i].published_date).fromNow()} - ${news[i].rights || "no rights info"}</span>
+          </div>
+        </a>
       </div>`;
     };
     
   };
 
   document.querySelector(".news .row").innerHTML = renderNewsHTML;
+};
+
+//error render
+const errorRender = (message) => {
+  let errorHTML = `<div class="alert alert-primary text-center" role="alert">
+  ${message}
+</div>`;
+  document.querySelector(".news .row").innerHTML = errorHTML;
 };
 
 // make pagination
@@ -148,5 +179,5 @@ const movePage = (NowPageNum) => {
 
 
 // function call
-latestHeadLineNews();
+// latestHeadLineNews();
 
