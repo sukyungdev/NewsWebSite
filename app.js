@@ -179,5 +179,5 @@ const movePage = (NowPageNum) => {
 
 
 // function call
-// latestHeadLineNews();
+latestHeadLineNews();
 
